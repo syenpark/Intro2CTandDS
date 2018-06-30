@@ -23,3 +23,14 @@ class Food(object):
     def __str__(self):
         return self.name + ': <' + str(self.value)\
                 + ', ' + str(self.calories) + '>'
+                
+def build_menu(names, values, calories):
+    """
+    returns list of Foods
+    """
+    menu = []
+    
+    for i in range(len(values)):
+        menu.append(Food(names[i], values[i], calories[i]))
+        
+    return menu
