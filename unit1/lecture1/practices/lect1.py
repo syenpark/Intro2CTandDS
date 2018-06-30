@@ -11,10 +11,10 @@ class Food(object):
         self.value = v
         self.calories = w
         
-    def getValue(self):
+    def get_value(self):
         return self.value
     
-    def getCost(self):
+    def get_cost(self):
         return self.calories
     
     def density(self):
@@ -34,3 +34,17 @@ def build_menu(names, values, calories):
         menu.append(Food(names[i], values[i], calories[i]))
         
     return menu
+
+def greedy(items, max_cost, key_function):
+    items_copy = sorted(items, key=key_function, reverse=True)
+    
+    result = []
+    total_value, total_cost = 0.0, 0.0
+    
+    for i in range(len(items_copy)):
+        if(total_cost + items_copy[i].get_cost()) <= max_cost:
+            result.append(items_copy[i])
+            total_cost += items_copy[i].get_cost()
+            total_value += items_copy[i].get_value()
+            
+    return (result, total_value)
