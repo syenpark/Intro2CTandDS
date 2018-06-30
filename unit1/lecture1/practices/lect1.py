@@ -36,6 +36,9 @@ def build_menu(names, values, calories):
     return menu
 
 def greedy(items, max_cost, key_function):
+    """
+    inputs items a list, max_cost >= 0
+    """
     items_copy = sorted(items, key=key_function, reverse=True)
     
     result = []
@@ -48,3 +51,10 @@ def greedy(items, max_cost, key_function):
             total_value += items_copy[i].get_value()
             
     return (result, total_value)
+
+def test_greedy(items, constraint, key_function):
+    taken, val = greedy(items, constraint, key_function)
+    print('Total value of items taken =', val)
+    
+    for item in taken:
+        print('   ', item)
