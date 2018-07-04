@@ -4,6 +4,12 @@ This repository is for my lecture notes of [Introduction to Computational Thinki
 ---
 ### __UNIT 1:__
 #### Lecture 1
+- Optimization models
+  
+  An objective function that is to be maximized or minimized
+  
+  A set of constraints (possibly empty)
+  
 - Greedy Algorithms
 
 #### Lecture 2

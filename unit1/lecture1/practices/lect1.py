@@ -6,73 +6,69 @@ Spyder Editor
 Python Version: 3.6
 """
 class Food(object):
-    def __init__(self, n, v, w):
-        self.name = n
-        self.value = v
-        self.calories = w
+    def __init__(self, name, value, calories):
+        self.name = name
+        self.value = value
+        self.calories = calories
         
+    def get_name(self):
+        return self.name
+    
     def get_value(self):
         return self.value
     
     def get_cost(self):
         return self.calories
     
-    def density(self):
-        return self.get_value() / self.get_cost()
+    def get_density(self):
+        try:
+            return self.get_value() / self.get_cost()
+        except ZeroDivisionError:
+            return float('inf')
     
     def __str__(self):
-        return self.name + ': <' + str(self.value)\
-                + ', ' + str(self.calories) + '>'
-                
+        return self.name + ': <' + str(self.value) \
+               + ', ' + str(self.calories) + '>'
+        
 def build_menu(names, values, calories):
-    """
-    returns list of Foods
-    """
     menu = []
     
     for i in range(len(values)):
         menu.append(Food(names[i], values[i], calories[i]))
-        
+    
     return menu
 
-def greedy(items, max_cost, key_function):
-    """
-    inputs items a list, max_cost >= 0
-    """
-    items_copy = sorted(items, key=key_function, reverse=True)
+def greedy(menu, constraint, key, key_func):
+    results = []
+    value, calories = 0.0, 0.0
     
-    result = []
-    total_value, total_cost = 0.0, 0.0
+    # sort the first argment by key and O(nlogn) 
+    foods_copy = sorted(menu, key=key_func, reverse=True)
     
-    for i in range(len(items_copy)):
-        if(total_cost + items_copy[i].get_cost()) <= max_cost:
-            result.append(items_copy[i])
-            total_cost += items_copy[i].get_cost()
-            total_value += items_copy[i].get_value()
-            
-    return (result, total_value)
-
-def test_greedy(items, constraint, key_function):
-    taken, val = greedy(items, constraint, key_function)
-    print('Total value of items taken =', val)
-    
-    for item in taken:
-        print('   ', item)
+    for food in foods_copy:
+        if calories + food.get_cost() <= constraint:
+            results.append(food)
+            value += food.get_value()
+            calories += food.get_cost()
         
-def test_greedys(foods, max_units):
-    print('Use greedy by value to allocate', max_units, 'calories')
-    test_greedy(foods, max_units, Food.get_value)
+    print('Use greedy by', key, 'to allocate', constraint,'calories')
+    print('Total value of items taken  =', value)
+    for result in results:
+        print('    ', result)
+    print('')
+
+def test_greedy(constraint):
+    key_funcs = {'value': Food.get_value, 'cost': lambda x: 1/Food.get_cost(x),
+                 'density': Food.get_density}
     
-    print('\nUse greedy by cost to allocate', max_units, 'calories')
-    test_greedy(foods, max_units, lambda x: 1/Food.get_cost(x))
-    
-    print('\nUse greedy by density to allocate', max_units, 'calories')
-    test_greedy(foods, max_units, Food.density)
-    
-names = ['wine', 'beer', 'pizza', 'burger', 'fries',
+    names = ['wine', 'beer', 'pizza', 'burger', 'fries',
          'cola', 'apple', 'donut', 'cake']
-values = [89,90,95,100,90,79,50,10]
-calories = [123,154,258,354,365,150,95,195]
-foods = build_menu(names, values, calories)
-test_greedys(foods, 1000)
+    values = [89,90,95,100,90,79,50,10]
+    calories = [123,154,258,354,365,150,95,195]
     
+    menu = build_menu(names, values, calories)
+    
+    for key in key_funcs:
+        greedy(menu, constraint, key, key_funcs[key])
+    
+test_greedy(1000)
