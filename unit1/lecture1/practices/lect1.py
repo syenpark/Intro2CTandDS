@@ -17,7 +17,7 @@ class Food(object):
     def get_value(self):
         return self.value
     
-    def get_calories(self):
+    def get_cost(self):
         return self.calories
     
     def get_density(self):
@@ -39,13 +39,26 @@ def build_menu(names, values, calories):
     return menu
 
 def greedy(menu, constraint, key, key_func):
-    print('Use greedy by', key, 'to allocate', constraint,'calories')
-    print('Total value of items taken  =')
+    results = []
+    value, calories = 0.0, 0.0
     
+    # sort the first argment by key and O(nlogn) 
+    foods_copy = sorted(menu, key=key_func, reverse=True)
+    
+    for food in foods_copy:
+        if calories + food.get_cost() <= constraint:
+            results.append(food)
+            value += food.get_value()
+            calories += food.get_cost()
+        
+    print('Use greedy by', key, 'to allocate', constraint,'calories')
+    print('Total value of items taken  =', value)
+    for result in results:
+        print('    ', result)
     print('')
 
 def test_greedy(constraint):
-    key_funcs = {'value': Food.get_value, 'cost': Food.get_calories,
+    key_funcs = {'value': Food.get_value, 'cost': lambda x: 1/Food.get_cost(x),
                  'density': Food.get_density}
     
     names = ['wine', 'beer', 'pizza', 'burger', 'fries',
