@@ -20,6 +20,12 @@ class Food(object):
     def get_calories(self):
         return self.calories
     
+    def get_density(self):
+        try:
+            return self.get_value() / self.get_cost()
+        except ZeroDivisionError:
+            return float('inf')
+    
     def __str__(self):
         return self.name + ': <' + str(self.value) \
                + ', ' + str(self.calories) + '>'
@@ -32,7 +38,16 @@ def build_menu(names, values, calories):
     
     return menu
 
-def test_greedy():
+def greedy(menu, constraint, key, key_func):
+    print('Use greedy by', key, 'to allocate', constraint,'calories')
+    print('Total value of items taken  =')
+    
+    print('')
+
+def test_greedy(constraint):
+    key_funcs = {'value': Food.get_value, 'cost': Food.get_calories,
+                 'density': Food.get_density}
+    
     names = ['wine', 'beer', 'pizza', 'burger', 'fries',
          'cola', 'apple', 'donut', 'cake']
     values = [89,90,95,100,90,79,50,10]
@@ -40,4 +55,7 @@ def test_greedy():
     
     menu = build_menu(names, values, calories)
     
-test_greedy()
+    for key in key_funcs:
+        greedy(menu, constraint, key, key_funcs[key])
+    
+test_greedy(1000)
