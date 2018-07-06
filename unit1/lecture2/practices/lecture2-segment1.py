@@ -40,29 +40,37 @@ def max_value(foods, room):
     inputs : foods is a list of Food objects, and room is available space
     returns: a tuple of a maximum value and foods in that case 
     """
+    
+    # if no more foods or no more room, it cannot pick up anything
     if not foods or not room:
         return (0, ())
     
-    elif foods[0].get_calories() > room:
+    # choose a candidate to check its availability
+    candidate = foods[0]
+   
+    # if the candidate is over loaded than constraint,
+    # it cannot choose the candidate. Just skip it.
+    if foods[0].get_calories() > room:
         return max_value(foods[1:], room)
     
+    # with candidate
+    # foods_with_candidate does not contain the candidate now
+    # because of foods[1:]
+    value_with_candidate, foods_with_candidate \
+    = max_value(foods[1:], room - candidate.get_calories())
+        
+    value_with_candidate += candidate.get_value()
+        
+    # without candidate   
+    value_without_candidate, foods_without_candidate \
+    = max_value(foods[1:], room - candidate.get_calories())
+    
+    # choose bigger one   
+    if value_with_candidate > value_without_candidate:
+        # foods_with_candidate does not contain the candidate, so that add it
+        return (value_with_candidate, foods_with_candidate + (candidate, ))
     else:
-        candidate = foods[0]
-        
-        value_with_candidate, foods_with_candidate \
-        = max_value(foods[1:], room - candidate.get_calories())
-        
-        value_with_candidate += candidate.get_value()
-        
-        
-        value_without_candidate, foods_without_candidate \
-        = max_value(foods[1:], room - candidate.get_calories())
-        
-        if value_with_candidate > value_without_candidate:
-            return (value_with_candidate \
-                    , foods_with_candidate + (candidate, ))
-        else:
-            return (value_without_candidate, foods_without_candidate)
+        return (value_without_candidate, foods_without_candidate)
     
 
 def test_max_value(foods, constraint, is_print=True):
