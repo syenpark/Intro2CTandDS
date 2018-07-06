@@ -14,18 +14,18 @@ class Food(object):
     def get_value(self):
         return self.value
     
-    def get_cost(self):
+    def get_calories(self):
         return self.calories
     
     def get_density(self):
         try:
-            return self.get_value() / self.get_cost()
+            return self.get_value() / self.get_calories()
         except ZeroDivisionError:
             return float('inf') 
     
     def __str__(self):
         return self.name + ': <' + str(self.get_value()) \
-               + ', ' + str(self.get_cost()) + '>'
+               + ', ' + str(self.get_calories()) + '>'
     
 def build_menu(names, values, calories):
     menu = []
@@ -35,8 +35,35 @@ def build_menu(names, values, calories):
         
     return menu
 
-def max_value(foods, constraint):
-    return (0, [])
+def max_value(foods, room):
+    """
+    inputs : foods is a list of Food objects, and room is available space
+    returns: a tuple of a maximum value and foods in that case 
+    """
+    if not foods or not room:
+        return (0, ())
+    
+    elif foods[0].get_calories() > room:
+        return max_value(foods[1:], room)
+    
+    else:
+        candidate = foods[0]
+        
+        value_with_candidate, foods_with_candidate \
+        = max_value(foods[1:], room - candidate.get_calories())
+        
+        value_with_candidate += candidate.get_value()
+        
+        
+        value_without_candidate, foods_without_candidate \
+        = max_value(foods[1:], room - candidate.get_calories())
+        
+        if value_with_candidate > value_without_candidate:
+            return (value_with_candidate \
+                    , foods_with_candidate + (candidate, ))
+        else:
+            return (value_without_candidate, foods_without_candidate)
+    
 
 def test_max_value(foods, constraint, is_print=True):
     print('Use search tree to allocate', constraint, 'calories')
