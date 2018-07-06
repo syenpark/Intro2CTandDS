@@ -35,9 +35,24 @@ def build_menu(names, values, calories):
         
     return menu
 
+def max_value(foods, constraint):
+    return (0, [])
+
+def test_max_value(foods, constraint, is_print=True):
+    print('Use search tree to allocate', constraint, 'calories')
+    
+    value, items = max_value(foods, constraint)
+    
+    print('Total value of items taken =', value)
+    
+    if is_print:
+        for item in items:
+            print(item)
+
 names = ['wine', 'beer', 'pizza', 'burger', 'fries',
          'cola', 'apple', 'donut', 'cake']
 values = [89,90,95,100,90,79,50,10]
 calories = [123,154,258,354,365,150,95,195]
 
 foods = build_menu(names, values, calories)
+test_max_value(foods, 750)
