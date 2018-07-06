@@ -5,29 +5,28 @@ Spyder Editor
 @auther: syenpark
 Python Version: 3.6
 """
-def power_set(items):
+def power_set(elements):
     """
-    inputs : a list 
-    returns: a list containing all possible subsets of the input
+    bitwise version
     """
-    temp = []
-    n = len(items)
+    subsets = []
+    n = len(elements)
     
-    for i in range(1 << n):
-        combo = []
+    for i in range(1<<n):
+        subset = []
         
         for j in range(n):
             print('i=', i, '; j=', j, ';; i >> j =', i >> j, ';; (i >> j) % 2 = ', (i >> j) % 2)
-            if (i >> j) & 1:
-                combo.append(items[j])
-        temp.append([combo])        
-        print('----------------------------------------------')
-        
-    return temp
             
-    
-foo = power_set(['a', 'b', 'c'])
-print(foo)
+            if (i>>j) & 1:
+                subset.append(elements[j])
+                
+        subsets.append(subset)
+        print('---------------------------------------------------------')
+        
+    return subsets
+
+print(power_set([1, 2, 3, 4]))
 
 """
 By Eynsa in the discussion form.

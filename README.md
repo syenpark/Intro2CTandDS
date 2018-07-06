@@ -17,6 +17,8 @@ This repository is for my lecture notes of [Introduction to Computational Thinki
 - Recursive Fibonacci
 - Dynamic Programming
 
+  https://www.quora.com/What-is-memoization
+
 #### Lecture 3
 - Graphs
 - Finding the Shortest Path
