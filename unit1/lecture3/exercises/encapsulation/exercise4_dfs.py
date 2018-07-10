@@ -7,15 +7,13 @@ Python Version: 3.6
 """
 import graph
 
-def counstrct_graph():
+def counstrct_graph(names):
     nodes = []
     g = graph.Graph()
     
-    names = ['ABC', 'ACB', 'BAC', 'BCA', 'CAB', 'CBA']
-    
     # create nodes with each name
-    for name in names: 
-        nodes.append(graph.Node(name))
+    for i in range(len(names)): 
+        nodes.append(graph.Node(names[i]))
     
     for n in nodes: 
         g.add_node(n)
@@ -28,7 +26,7 @@ def counstrct_graph():
                             g.get_node(line[0:1]+line[-1:]+line[1:-1])))
             g.add_edge(graph.Edge(g.get_node(line), \
                             g.get_node(line[1:-1]+line[0:1]+line[-1:])))
-    return g, names
+    return g
 
 def print_path(path):
     """
@@ -75,7 +73,8 @@ def shortest_path(graph, start, end, print_flag = False):
     return dfs(graph, start, end, [], None, print_flag)
 
 def testSP(source, destination):
-    g, names = counstrct_graph()
+    names = ['ABC', 'ACB', 'BAC', 'BCA', 'CAB', 'CBA']
+    g = counstrct_graph(names)
     sp = shortest_path(g, g.get_node(source), g.get_node(destination),
                       print_flag = True)
     if sp != None:
