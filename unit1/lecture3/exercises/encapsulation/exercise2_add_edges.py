@@ -7,9 +7,9 @@ Python Version: 3.6
 """
 import graph_module
 
-def build_permutation_graph():
+def build_permutation_graph(graph_type):
     nodes = []
-    g = graph_module.Graph()
+    g = graph_type()
     
     permutations = ('ABC', 'ACB', 'BAC', 'BCA', 'CAB', 'CBA')
     
@@ -30,4 +30,4 @@ def build_permutation_graph():
                             g.get_node(line[1:-1]+line[0:1]+line[-1:])))
     return g
     
-print(build_permutation_graph())
+print(build_permutation_graph(graph_module.Graph))
