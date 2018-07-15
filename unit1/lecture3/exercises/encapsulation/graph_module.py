@@ -8,10 +8,10 @@ Python Version: 3.6
 class Node(object):
     def __init__(self, name):
         """
-        type(name) == str
+        name should be a string
         """
         self.__name = name
-    
+        
     def get_name(self):
         return self.__name
     
@@ -21,7 +21,7 @@ class Node(object):
 class Edge(object):
     def __init__(self, src, dest):
         """
-        src and dest are instance of Node
+        src and dest are Node
         """
         self.__src = src
         self.__dest = dest
@@ -33,27 +33,31 @@ class Edge(object):
         return self.__dest
     
     def __str__(self):
-        return self.get_src() + "->" + self.get_dest()
+        return self.__src.get_name() + '->' + self.__dest.get_name()
     
 class Digraph(object):
+    """
+    build digraction graph
+    """
     def __init__(self):
         self.__edges = {}
-    
+        
     def add_node(self, node):
         if node in self.__edges:
-            raise ValueError('Duplicated node')
+            raise ValueError('Duplicate node')
         else:
             self.__edges[node] = []
             
-    def add_edge(self, node):
-        src = node.get_src()
-        dest = node.get_dest()
+    def add_edge(self, edge):
+        src = edge.get_src()
+        dest = edge.get_dest()
         
         if not (src in self.__edges and dest in self.__edges):
             raise ValueError('Node not in graph')
             
-        self.__edges[src].append(dest)
-        
+        else:
+            self.__edges[src].append(dest)
+            
     def child_of(self, node):
         return self.__edges[node]
     
@@ -64,23 +68,24 @@ class Digraph(object):
         for node in self.__edges:
             if node.get_name() == name:
                 return node
-        
-        raise NameError(name)
-        
+        else:
+            raise NameError(name)
+            
     def __str__(self):
         result = []
         
         for src in self.__edges:
             for dest in self.__edges[src]:
-                result.append(src.get_name() + '->'+ dest.get_name() + '\n')
-        
-        # omit final new line
-        result[-1] = result[-1][:-1]
-        
-        return ''.join(result)
+                result.append(src.get_name() + '->'\
+                         + dest.get_name() + '\n')
+                
+        return "".join(result)[:-1]
     
 class Graph(Digraph):
+    """
+    build graph by adding edges and their reversed ones using Digraph
+    """
     def add_edge(self, edge):
         Digraph.add_edge(self, edge)
-        rev = Edge(edge.get_dest(), edge.get_src())
-        Digraph.add_edge(self, rev)
+        reversed_edge = Edge(edge.get_dest(), edge.get_src())
+        Digraph.add_edge(self, reversed_edge)
