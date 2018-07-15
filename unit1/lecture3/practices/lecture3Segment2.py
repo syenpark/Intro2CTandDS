@@ -103,6 +103,7 @@ def build_city_graph(graph_type):
     g.add_edge(Edge(g.get_node('Providence'), g.get_node('New York')))
     g.add_edge(Edge(g.get_node('New York'), g.get_node('Chicago')))
     g.add_edge(Edge(g.get_node('Chicago'), g.get_node('Denver')))
+    g.add_edge(Edge(g.get_node('Chicago'), g.get_node('Phoenix')))
     g.add_edge(Edge(g.get_node('Denver'), g.get_node('Phoenix')))
     g.add_edge(Edge(g.get_node('Denver'), g.get_node('New York')))
     g.add_edge(Edge(g.get_node('Los Angeles'), g.get_node('Boston')))
