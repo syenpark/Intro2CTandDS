@@ -81,6 +81,8 @@ def greedy_cow_transport(cows,limit=10):
                     trip.append(name)
                     trip_weight += weight
                     heaviest_cows.remove(name)
+            elif weight > limit:
+                heaviest_cows.remove(name)
             
         trips.append(trip)
         trip = []
@@ -138,7 +140,7 @@ Do not submit this along with any of your answers. Uncomment the last two
 lines to print the result of your problem.
 """
 cows = load_cows("ps1_cow_data.txt")
-#cows = {"Jesse": 6, "Maybel": 3, "Callie": 2, "Maggie": 5}
+cows = {"Jesse": 6, "Maybel": 3, "Callie": 2, "Maggie": 5}
 limit=10
 print(cows)
 print(greedy_cow_transport(cows, limit))

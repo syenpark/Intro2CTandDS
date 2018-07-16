@@ -79,6 +79,8 @@ def greedy_cow_transport(cows,limit=10):
                     trip.append(name)
                     trip_weight += weight
                     heaviest_cows.remove(name)
+            elif weight > limit:
+                heaviest_cows.remove(name)
      
         remains = {}
         
