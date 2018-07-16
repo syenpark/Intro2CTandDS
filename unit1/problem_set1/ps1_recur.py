@@ -64,8 +64,8 @@ def greedy_cow_transport(cows,limit=10):
         sorted_cows = sorted(cows.items(), key=lambda x: x[1], reverse=True)
         heaviest_cows = [name for (name, weight)in sorted_cows]    
         
-        trip=[]
-        trip_weight=0
+        trip = []
+        trip_weight = 0
         
         for name in heaviest_cows[:]: 
             weight = cows[name]
@@ -80,12 +80,12 @@ def greedy_cow_transport(cows,limit=10):
                     trip_weight += weight
                     heaviest_cows.remove(name)
      
-        a = {}
+        remains = {}
         
         for name in  heaviest_cows:
-            a[name] = cows[name]
+            remains[name] = cows[name]
 
-        return [trip] + greedy_cow_transport(a, limit)
+        return [trip] + greedy_cow_transport(remains, limit)
         
 
 
