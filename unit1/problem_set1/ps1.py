@@ -54,8 +54,39 @@ def greedy_cow_transport(cows,limit=10):
     transported on a particular trip and the overall list containing all the
     trips
     """
-    # TODO: Your code here
-    pass
+    trip = []
+    trips = []
+    trip_weight = 0
+    
+    # refer: def __getitem__(self, key): return self.data[key]
+    # heaviest_cows = sorted(cows, key=cows.__getitem__, reverse=True)
+    heaviest_cows = sorted(cows.items(), key=lambda x: x[1], reverse=True)
+    heaviest_cows = [name for (name, weight)in heaviest_cows]    
+ 
+    while heaviest_cows:
+        # To prevent unexpected result caused by the altered list,
+        # use copy of the list
+        for name in heaviest_cows[:]: 
+            weight = cows[name]
+            
+            if weight + trip_weight <= limit:
+                # Checks still here (the cow is not loaded yet);
+                # Already gone, just skip;
+                # Still here, load the cow
+                try:
+                    heaviest_cows.index(name)
+                except:
+                    pass
+                else:
+                    trip.append(name)
+                    trip_weight += weight
+                    heaviest_cows.remove(name)
+            
+        trips.append(trip)
+        trip = []
+        trip_weight = 0
+        
+    return trips
 
 
 # Problem 2
@@ -106,11 +137,10 @@ Here is some test data for you to see the results of your algorithms with.
 Do not submit this along with any of your answers. Uncomment the last two
 lines to print the result of your problem.
 """
-
 cows = load_cows("ps1_cow_data.txt")
-limit=100
+#cows = {"Jesse": 6, "Maybel": 3, "Callie": 2, "Maggie": 5}
+limit=10
 print(cows)
-
 print(greedy_cow_transport(cows, limit))
 print(brute_force_cow_transport(cows, limit))
 
