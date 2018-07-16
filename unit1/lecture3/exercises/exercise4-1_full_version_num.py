@@ -205,4 +205,4 @@ def testSP(src_index, dest_index):
 
 permutations = ('ABC', 'ACB', 'BAC', 'BCA', 'CAB', 'CBA')
 
-testSP(0, 4)
+testSP(2, 3)
