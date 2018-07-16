@@ -143,12 +143,13 @@ def print_path(path):
             
     return ''.join(result) 
 
-def DFS(graph, start, end, path, shortest, print_flag=False):
+def dfs_first_path(graph, start, end, path, shortest, print_flag=False):
     """
     inputs:  graph is a Digraph; 
              start and end are nodes;
              path and shortest are lists of nodes
-    returns: a shortest path from start to end in graph
+    returns: the first found path from start to end in graph with DFS;
+             and lower numbered node as a top priority
     """
     # The way to get back after finding local shortest path;
     # Creates a new local veriable in each recursive execution
@@ -156,24 +157,33 @@ def DFS(graph, start, end, path, shortest, print_flag=False):
     path = path + [start]
     
     if print_flag:
-        print('Current DFS path:', print_path(path))
+        print('Current dfs_first_path path:', print_path(path))
         
     if start == end:
         return path
     
+    # Sets top priority lower numbered nodes
     names = [node.get_name() for node in graph.child_of(start)]
+    priority = sorted([permutations.index(name) for name in names])
     
-    print(sorted([permutations.index(name) for name in names]))
-    
-    for node in graph.child_of(start):
+    for node_index in priority:
+        node_name = permutations[node_index]
+        node = graph.get_node(node_name)
+        
         # Checks previous path to avoid cycles
         if node not in path:
+            
             # if find a shortest path
             if shortest == None or len(path) < len(shortest):
-                new_path = DFS(graph, node, end, path, shortest, print_flag)
+                new_path = dfs_first_path(graph, node, end, path, shortest, print_flag)
                 
                 if new_path != None:
                     shortest = new_path
+                    
+                    # Gives the first path found to the listed destination nodes;
+                    # not to find out the shortest path
+                    # If find the path from src to destination, finish it ASAP
+                    break
         
         # Avoids cycles            
         elif print_flag:
@@ -181,13 +191,14 @@ def DFS(graph, start, end, path, shortest, print_flag=False):
             
     return shortest
     
-def shortest_path(graph, start, end, print_flag=False):
+def first_path(graph, start, end, print_flag=False):
     """
     inputs:  graph is a Digraph;
              start and end are nodes
-    returns: a shortest path from start to end in graph
+    returns: the first found path from start to end in graph with DFS;
+             and lower numbered node as a top priority
     """
-    return DFS(graph, start, end, [], None, print_flag)
+    return dfs_first_path(graph, start, end, [], None, print_flag)
 
 def testSP(src_index, dest_index):
     g = build_permutation_graph(Digraph)
@@ -198,7 +209,7 @@ def testSP(src_index, dest_index):
     src_node = g.get_node(source)
     dest_node = g.get_node(destination)
     
-    sp = shortest_path(g, src_node, dest_node, print_flag=True)
+    sp = first_path(g, src_node, dest_node, print_flag=True)
     
     if sp != None:
         print('Shortest path from', src_index, 'to',
@@ -208,4 +219,4 @@ def testSP(src_index, dest_index):
 
 permutations = ('ABC', 'ACB', 'BAC', 'BCA', 'CAB', 'CBA')
 
-testSP(2, 3)
+testSP(3, 1)
