@@ -161,10 +161,13 @@ def DFS(graph, start, end, path, shortest, print_flag=False):
     if start == end:
         return path
     
+    names = [node.get_name() for node in graph.child_of(start)]
+    
+    print(sorted([permutations.index(name) for name in names]))
+    
     for node in graph.child_of(start):
         # Checks previous path to avoid cycles
         if node not in path:
-            
             # if find a shortest path
             if shortest == None or len(path) < len(shortest):
                 new_path = DFS(graph, node, end, path, shortest, print_flag)
