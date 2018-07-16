@@ -11,6 +11,7 @@ This repository is for my lecture notes of [Introduction to Computational Thinki
   A set of constraints (possibly empty)
   
 - Greedy Algorithms
+  Choose the best one in each step (locally), but this does not gurantee the final result  will be optimal. In spite of the drawback, this approach is still helpful to handle new and unsolved problems.
 
 #### Lecture 2
 - Brute Force Algorithms
@@ -21,7 +22,12 @@ This repository is for my lecture notes of [Introduction to Computational Thinki
 
 #### Lecture 3
 - Graphs
+  Unlike tree, cycle can be included in graph.
+
 - Finding the Shortest Path
+  [Depth first search (DFS)](https://www.youtube.com/watch?v=tlPuVe5Otio) VS. [Breadth first search (BFS)](https://www.youtube.com/watch?v=E_V71Ejz3f4)
+
+  For a weighted shortest path, use DFS.
 
 #### Problem Set 1
 ---
