@@ -204,8 +204,9 @@ testSP('Boston', 'Phoenix')
 
 def BFS(graph, start, end, print_flag = False):
     """
-    Assumes graph is a Digraph; start and end are nodes
-    Returns a shortest path from start to end in graph
+    inputs : graph is a Digraph; 
+             start and end are nodes
+    returns: a shortest path from start to end in graph
     """
     
     init_path = [start]
@@ -230,9 +231,12 @@ def BFS(graph, start, end, print_flag = False):
                 
     return None
 
-def shortestPath(graph, start, end, print_flag = False):
-    """Assumes graph is a Digraph; start and end are nodes
-       Returns a shortest path from start to end in graph"""
+def shortest_path(graph, start, end, print_flag = False):
+    """
+    inputs:  graph is a Digraph; 
+             start and end are nodes
+    returns: a shortest path from start to end in graph
+    """
     return BFS(graph, start, end, print_flag)
     
 testSP('Boston', 'Phoenix')
