@@ -112,9 +112,30 @@ def brute_force_cow_transport(cows,limit=10):
     transported on a particular trip and the overall list containing all the
     trips
     """
-    # TODO: Your code here
-    pass
-
+    # Generates all the possible partitions of cows for the brute force method;
+    possible_trips = get_partitions(cows)
+    
+    # Sorts all partitions by ascending # of trips order
+    sorted_trips = sorted(possible_trips, key=lambda x: len(x))
+    
+    # Checks each trip's validity from the trip that has the minimum # of trips 
+    for trip in sorted_trips:
+        spaceship = []
+        cargo_weight = 0
+        
+        for riders in trip:
+            # Total weight of cows in a cargo
+            cargo_weight = sum([cows[cow] for cow in riders])
+            
+            # If overweighted, this partition is impossible to travel
+            if cargo_weight > limit:
+                break
+            else:
+                spaceship.append(riders)
+        
+        # If every partition in a trip is valid, this go on a trip! 
+        else:
+            return spaceship
         
 # Problem 3
 def compare_cow_transport_algorithms():
@@ -140,7 +161,7 @@ Do not submit this along with any of your answers. Uncomment the last two
 lines to print the result of your problem.
 """
 cows = load_cows("ps1_cow_data.txt")
-cows = {"Jesse": 6, "Maybel": 3, "Callie": 2, "Maggie": 5}
+#cows = {"Jesse": 6, "Maybel": 3, "Callie": 2, "Maggie": 5}
 limit=10
 print(cows)
 print(greedy_cow_transport(cows, limit))
