@@ -14,7 +14,10 @@ This repository is for my lecture notes of [Introduction to Computational Thinki
   Choose the best one in each step (locally), but this does not gurantee the final result  will be optimal. In spite of the drawback, this approach is still helpful to handle new and unsolved problems.
 
 #### Lecture 2
+- Tree (is belonging to Graph, but no vice versa)
 - Brute Force Algorithms
+  It is useful, for example, to find power set. It generates all the possible combinations and check them to find out  whant I want.
+
 - Recursive Fibonacci
 - Dynamic Programming
 
@@ -26,7 +29,7 @@ This repository is for my lecture notes of [Introduction to Computational Thinki
 
 - Finding the Shortest Path
   [Depth first search (DFS)](https://www.youtube.com/watch?v=tlPuVe5Otio) VS. [Breadth first search (BFS)](https://www.youtube.com/watch?v=E_V71Ejz3f4)
-
+  Above things are sort of backtraking. They check eacn step and decide whether go or not depending on its policy (DFS or BFS, or etc.)
   For a weighted shortest path, use DFS.
 
 #### Problem Set 1
