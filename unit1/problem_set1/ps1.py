@@ -89,8 +89,7 @@ def greedy_cow_transport(cows,limit=10):
         trip_weight = 0
         
     return trips
-
-
+    
 # Problem 2
 def brute_force_cow_transport(cows,limit=10):
     """
@@ -151,8 +150,16 @@ def compare_cow_transport_algorithms():
     Returns:
     Does not return anything.
     """
-    # TODO: Your code here
-    pass
+    start = time.time()
+    print(greedy_cow_transport(cows, limit))
+    end = time.time()
+    print('greedy_cow_transport:', end - start)
+    
+    print('')
+    start = time.time()
+    print(brute_force_cow_transport(cows, limit))
+    end = time.time()
+    print('brute_force_cow_transport:', end - start)
 
 
 """
@@ -163,8 +170,6 @@ lines to print the result of your problem.
 cows = load_cows("ps1_cow_data.txt")
 #cows = {"Jesse": 6, "Maybel": 3, "Callie": 2, "Maggie": 5}
 limit=10
-print(cows)
-print(greedy_cow_transport(cows, limit))
-print(brute_force_cow_transport(cows, limit))
-
+print(cows, '\n')
+compare_cow_transport_algorithms()
 
